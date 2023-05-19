@@ -10,7 +10,13 @@
       v-model="this.login"
       hide-details="auto"
     ></v-text-field>
-    <v-text-field label="Another input"></v-text-field>
+    <v-checkbox
+                v-model="admin"
+                label="Администратор"
+                name="admin"
+                :value="this.admin"
+              />
+              <v-checkbox
   </div>
     </div>
 </template>

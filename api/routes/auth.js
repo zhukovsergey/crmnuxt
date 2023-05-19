@@ -61,7 +61,7 @@ router.post("/login", async (req, res, done) => {
         await jsonwebtoken.sign({ user: req.body.user }, "secret", async function (err, token) {
             await res.json({ token: token, user: req.body.user, id: req.body._id });
         })
-        console.log(req.body)
+        
     }
     else {
         await res.status(403).json({ message: 'Ошибка авторизации' });
@@ -93,10 +93,35 @@ router.get('/user', async (req, res) => {
 
 });
 router.get('/:id', async (req, res) => {
-    console.log(req.params.id)
+    
     const userfull= await users.findOne({ login: req.params.id }).select('_id login admin')
     res.json(userfull)
 });
 
+
+router.patch('/:login', async (req, res) => {
+    let Users
+   // try {
+        // Ищем страницу по URL, который указан в строке запроса.
+        Users = await users.findOne({ login: req.body.login }).exec()
+        res.Users = Users
+       // if (Users === null) {
+          // Возвращаем 404 ответ сервера, если страница не найдена.
+        //  return res.status(404).json({ message: 'Страницы не существует' })
+        //} else {
+           res.Users.admin=req.body.admin
+        const updatedUsers = res.Users.save()
+        await res.json(updatedUsers)
+    //    }
+     // } catch (err) {
+     //   return res.status(500).json({ message: err.message })
+     // }
+  })
+  router.get('/all/users', async (req, res) => {
+     const usersall = await users.find()
+     res.json(usersall)
+
+
+})
 module.exports = router;
 

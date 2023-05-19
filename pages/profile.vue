@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h2>Профиль пользователя </h2>
-        {{this.login}}
+        <h2>Профиль пользователя {{this.login}} </h2>
+        
         {{this.id}}
-
-        <div>
+    
+        
     <v-text-field
       label="Логин"
       v-model="this.login"
@@ -17,7 +17,7 @@
                 :value="this.admin"
               />
               <v-checkbox
-  </div>
+        <v-btn @click=moderatecom>Изменить</v-btn>
     </div>
 </template>
 
@@ -50,7 +50,19 @@ methods: {
       this.login = this.usrfull.data.login
       this.id = this.usrfull.data._id
       this.admin = this.usrfull.data.admin
-  }
+  },
+  moderatecom () {
+      const formData = {
+        admin: this.admin,
+        login: this.login
+      }
+      axios
+        .patch(
+          `http://localhost:3000/api/auth/${this.usrname}`,
+          formData
+        )
+        .then()
+    },
 }
 }
 </script>

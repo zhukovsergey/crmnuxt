@@ -15,12 +15,16 @@
   </v-app-bar-nav-icon>
   <NuxtLink to="/" class="titlelink">
     <v-toolbar-title>CRM Эталон</v-toolbar-title></NuxtLink>
+    
     <v-spacer></v-spacer>
+    <NuxtLink to="/users" class="loginlink"> 
+    <v-btn elevated class="red">Пользователи</v-btn></NuxtLink>
     <NuxtLink to="/login" class="loginlink">
       <v-btn icon name="login" id="login">
         <v-icon size="x-large">mdi-face-man</v-icon> 
       </v-btn>
       <label v-if="!this.$auth.loggedIn" for="login" class="font-weight-bold">Вход</label></NuxtLink>
+      
   </v-app-bar>
 
   <v-main>

@@ -94,7 +94,7 @@ router.get('/user', async (req, res) => {
 });
 router.get('/:id', async (req, res) => {
     
-    const userfull= await users.findOne({ login: req.params.id }).select('_id login admin')
+    const userfull= await users.findOne({ login: req.params.id }).select('_id login admin prihod')
     res.json(userfull)
 });
 
@@ -117,6 +117,45 @@ router.patch('/:login', async (req, res) => {
      //   return res.status(500).json({ message: err.message })
      // }
   })
+
+  router.patch('/:login/onjob', async (req, res) => {
+    let Users
+    console.log(req.body)
+   // try {
+        // Ищем страницу по URL, который указан в строке запроса.
+        Users = await users.findOne({ login: req.body.login }).exec()
+        res.Users = Users
+       // if (Users === null) {
+          // Возвращаем 404 ответ сервера, если страница не найдена.
+        //  return res.status(404).json({ message: 'Страницы не существует' })
+        //} else {
+           res.Users.prihod=req.body.prishel
+        const updatedUsers = res.Users.save()
+        await res.json(updatedUsers)
+    //    }
+     // } catch (err) {
+     //   return res.status(500).json({ message: err.message })
+     // }
+  })
+  router.patch('/:login/remove', async (req, res) => {
+   console.log(req.body)
+   Users = await users.deleteOne({ login: req.body.login })
+   
+  })
+  router.patch('/:login/addTask', async (req, res) => {
+    let Users
+    console.log(req.body)
+    Users = await users.findOne({ login: req.body.login })
+    res.Users = Users
+       // if (Users === null) {
+          // Возвращаем 404 ответ сервера, если страница не найдена.
+        //  return res.status(404).json({ message: 'Страницы не существует' })
+        //} else {
+           res.Users.task=req.body.task
+        const updatedUsers = res.Users.save()
+        await res.json(updatedUsers)
+    
+   })
   router.get('/all/users', async (req, res) => {
      const usersall = await users.find()
      res.json(usersall)

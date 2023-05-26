@@ -34,8 +34,12 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/date-fns',
     
   ],
+  dateFns: {
+    defaultLocale: 'ru',
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

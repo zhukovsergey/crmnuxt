@@ -18,10 +18,17 @@
               />
               <v-checkbox
         <v-btn @click=moderatecom>Изменить</v-btn>
+        <v-btn @click=onJob>Отметиться</v-btn>
+        <span color="red" v-if="this.timestamp">Вы уже на работе отметка {{timestamp}} </span>
+       <span>{{ $dateFns.format(podschetvremeni, 'yyyy-MM-dd HH:mm:ss') }}</span>
+              
+              <v-checkbox
     </div>
 </template>
 
 <script>
+import {format, parse, parseISO} from 'date-fns'
+import { ru } from 'date-fns/locale';
 import axios from 'axios'
 export default {
     
@@ -32,6 +39,8 @@ export default {
         login:'',
         id:'',
         admin: false,
+        prishel:new Date(),
+        timestamp:'',
     }
  }  
 ,
@@ -41,6 +50,20 @@ mounted() {
     
   
 },
+
+computed: {
+    // a computed getter
+    podschetvremeni() {
+      //const raznica = format(parseISO(new Date), 'T') - format(parseISO(this.timestamp), 'T');
+      const unixTimeZero = Date.parse(this.timestamp)
+      const unixTimeZero2 = Date.parse(new Date())
+      const raznica = unixTimeZero2 - unixTimeZero
+      const narabote=raznica
+      //const created = format(parseISO(date), 'T',{locale: ru})
+      return narabote
+      
+    }
+  },
 methods: {
   async getUsrName() {
    this.usrname=  this.$auth.user
@@ -50,6 +73,7 @@ methods: {
       this.login = this.usrfull.data.login
       this.id = this.usrfull.data._id
       this.admin = this.usrfull.data.admin
+      this.timestamp=this.usrfull.data.prihod
   },
   moderatecom () {
       const formData = {
@@ -63,6 +87,18 @@ methods: {
         )
         .then()
     },
+  onJob() {
+    const formData = {
+      login:this.login,
+      prishel: this.prishel
+    }
+    axios
+        .patch(
+          `http://localhost:3000/api/auth/${this.usrname}/onjob`,
+          formData
+        )
+        .then()
+  }
 }
 }
 </script>

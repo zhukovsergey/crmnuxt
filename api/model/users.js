@@ -9,10 +9,22 @@ const usersSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  task: {
+    type: String,
+  },
   admin: {
     type: Boolean,
     default: false,
     required: false,
+  },
+  createdDate: {
+    // У каждой страницы автоматически сохраняется дата создания.
+    type: Date,
+    default: Date.now
+  },
+  prihod: {
+    // У каждой страницы автоматически сохраняется дата создания.
+    type: String,
   },
   password: {
     // У каждой страницы автоматически сохраняется дата создания.

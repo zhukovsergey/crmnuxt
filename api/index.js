@@ -31,10 +31,10 @@ app.use(express.json())
 
 
 
-const BlogRoutes = require('./routes/blog')
+const blogRoutes = require('./routes/blog')
 const authRoutes = require('./routes/auth')
 
-app.use('/blog', BlogRoutes)
+app.use('/blog', blogRoutes)
 app.use('/auth', authRoutes)
 
 
